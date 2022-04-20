@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {Movie} from './types/Movie'
 
 
@@ -5,6 +6,8 @@ export function Movies() {
 
 
 const [movies, setMovies] = useState<Movie[]>([])
+const [loading, setLoading] = useState(false)
+
 useEffect(() => {
   loadMovies()
 }, [])

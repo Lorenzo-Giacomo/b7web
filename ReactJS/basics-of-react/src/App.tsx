@@ -1,106 +1,32 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { PostItem } from './components/PostItem';
-import { PostForm } from './components/PostForm';
-import './App.css';
-import { Posts } from './types/Posts'
+import { Routes, Route } from 'react-router-dom'
+import { About } from './pages/About'
+import { AboutLorenzo } from './pages/AboutLorenzo'
+import { AboutMatheus } from './pages/AboutMatheus'
 
-function App() {
-  const [posts, setPosts] = useState<Posts[]>([])
-  const [loading, setLoading] = useState(false)
+import { Home } from './pages/Home'
 
-
-  useEffect(()=>{
-    loadPosts()
-  }, [])
-
-  const loadPosts = async () => {
-    try {
-
-      setLoading(true)
-      let response = await fetch('https://jsonplaceholder.typicode.com/posts')
-      let json = await response.json()
-      setPosts(json)
-      setLoading(false)
-    } catch(e) {
-      setLoading(false)
-      setPosts([])
-      console.error(e)
-    } 
-  }
-
-  // SEPARAMOS ENTRE COMPONENTES
-
-  // const handleAddClick = async () => {
-  //   if (addTitleText && addBodyText) {
-  //     let response = fetch('https://jsonplaceholder.typicode.com/posts', {
-  //       method: 'POST',
-  //       // converte o json pra um formato de string
-  //       body: JSON.stringify({
-  //         title: addTitleText,
-  //         body: addBodyText,
-  //         userId: 1
-  //       }),
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       }
-  //     })
-  //     let json = await (await response).json()
-  //     console.log(json)
-
-  //     if (json.id) {
-  //       alert('Post adicionado com sucesso')
-  //     } else {
-  //       alert('Ocorreu algum erro')
-  //     }
-
-  //   } else {
-  //     alert('Preencha os dados!')
-  //   }
-  // }
-
-  // parametros q irá receber de dentro do componente
-  const handleAddPost = async (title: string, body: string) => {
-    let response = fetch('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        // converte o json pra um formato de string
-        body: JSON.stringify({ title, body, userId: 1 }),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      let json = await (await response).json()
-      console.log(json)
-
-      if (json.id) {
-        alert('Post adicionado com sucesso')
-      } else {
-        alert('Ocorreu algum erro')
-      }
-  }
+const App = () => {
 
   return (
     <div>
-      {loading &&
-        <div>Carregando...</div>
-      }
-
-      <PostForm onAdd={handleAddPost}/>
-
-      { !loading && posts.length > 0 &&
-        <>
-        Total de Posts: {posts.length}
-      
-        <div className="grid grid-cols-6 gap-3">
-          {posts.map((item, index) => (
-            <PostItem data={item}/>
-          ))}
-        </div>
-        </>
-      }
-      {!loading && posts.length === 0 &&
-        <div>Não há posts para exibir</div>
-      }
-      
+      <header>
+        <h1>Título do site</h1>
+      </header>
+      <hr />
+      <div>
+        <Routes>
+          <Route path='/' element={<Home/>} />
+          <Route path='/sobre' element={<About/>} />
+          <Route path='/sobre/lorenzo' element={<AboutLorenzo />} />
+          <Route path='/sobre/matheus' element={<AboutMatheus/>} />
+        </Routes>
+      </div>
+      <hr />
+      <footer>
+        Todos os direitos reservados
+      </footer>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
