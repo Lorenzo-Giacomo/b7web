@@ -1,9 +1,6 @@
-import { Routes, Route } from 'react-router-dom'
-import { About } from './pages/About'
-import { AboutLorenzo } from './pages/AboutLorenzo'
-import { AboutMatheus } from './pages/AboutMatheus'
-
-import { Home } from './pages/Home'
+// import { Routes, Route } from 'react-router-dom'
+// tiramos as importações dos componentes das páginas daqui e enviamos para o componente de rotas e o importamos aqui.
+import { MainRoutes } from "./routes/MainRoutes"
 
 const App = () => {
 
@@ -14,12 +11,8 @@ const App = () => {
       </header>
       <hr />
       <div>
-        <Routes>
-          <Route path='/' element={<Home/>} />
-          <Route path='/sobre' element={<About/>} />
-          <Route path='/sobre/lorenzo' element={<AboutLorenzo />} />
-          <Route path='/sobre/matheus' element={<AboutMatheus/>} />
-        </Routes>
+        {/* Tiramos a rota daqui e enviamos para um componente somente de rotas*/}
+        <MainRoutes></MainRoutes>
       </div>
       <hr />
       <footer>
