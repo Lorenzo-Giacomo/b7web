@@ -6,7 +6,16 @@ export const ShowData = () => {
   const {state, dispatch} = useContext(Context)
   return (
     <div>
-      Tela ShowData de {state.user.name}
+      <h3>Tela ShowData</h3>
+      {/* se tiver preenchido, mostra as infos */}
+      {state.user.name && 
+        <>
+        MEU NOME É: {state.user.name} <br />
+        EU TENHO {state.user.age} ANOS.
+        </>
+      }
+      {!state.user.name && 'Não há informações'}
+      
       <br />
       <Link to="/">Voltar para SignUp</Link>
     </div>

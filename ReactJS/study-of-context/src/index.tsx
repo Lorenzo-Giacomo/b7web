@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ContextProvider } from './contexts/Context';
+// colocamos o provider envelopando o App para que as informações do contexto estejam disponíveis para todos os níveis das páginas.
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ContextProvider> 
+      <App />
+    </ContextProvider>
   </React.StrictMode>
 );
 

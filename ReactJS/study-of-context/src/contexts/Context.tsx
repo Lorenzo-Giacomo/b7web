@@ -1,11 +1,13 @@
 import { createContext, useReducer } from "react";
 
 import { UserType, userInitialState, userReducer } from "../hooks/userReducer";
+import { ThemeType, themeInitialState, themeReducer } from "../hooks/themeReducer";
 
 import { reducerActionType } from "../types/reducerActionType"
 
 type initialStateType = {
-  user: UserType
+  user: UserType,
+  theme: ThemeType
 }
 
 type ContextType = {
@@ -19,7 +21,8 @@ type Props = {
 
 const initialState = {
   // pode utilizar mais de um reducer
-  user: userInitialState
+  user: userInitialState,
+  theme: themeInitialState
 }
 
 export const Context = createContext<ContextType>({
@@ -28,7 +31,8 @@ export const Context = createContext<ContextType>({
 })
 
 const mainReducer = (state: initialStateType, action: reducerActionType ) => ({
-  user: userReducer(state.user, action)
+  user: userReducer(state.user, action),
+  theme: themeReducer(state.theme, action)
 })
 
 export const ContextProvider = ({ children }: Props) => {
