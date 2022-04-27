@@ -1,28 +1,35 @@
 import express, { Request, Response} from 'express'
-// criamos servidor
+import path from 'path'
+import mustache from 'mustache-express'
+
+
+import mainRoutes from './routes/index'
+import painelRoutes from './routes/painel'
+
 
 const server = express()
 
-// definimos o tipo do req e res.
-// Rota estatica:
-server.get('/', (req: Request, res: Response) => {
-  // mandamos uma função, que recebe por padrão o req e o res. Quando acessamos um site, diversas informações vão juntos. Res é responsavel pela resposta do processo de requisição, seja imagem, mensagem, etc.
+//configurando mustache:
+server.set('view engine', 'mustache')
+server.set('views', path.join(__dirname, 'views'))
+server.engine('mustache', mustache())
 
-  res.send("Olá mundo")
-  // todo acesso a uma página vem junto com um método. Post envia um corpo, quando se quiser mandar dados internamente. As mesmas rotas podem ter métodos diferentes.
+// server.use( '/static', express.static('public'))
+server.use(express.static(path.join(__dirname, '../public')))
+
+server.use( '/', mainRoutes) // seleciona as rotas do index a partir do prefixo /
+
+/*
+Pegar os produtos do banco de dados
+organizar as informações desses produtos
+envia para o template engine
+junta as duas informações e transforma em informação visual.
+*/
+
+server.use( '/painel', painelRoutes) // seleciona as rotas do painel a partir do prefixo /painel. Será renderizada a rota / no arquivo painel.ts
+server.use((req: Request, res: Response) => {
+  res.status(404).send('Página não encontrada')
 })
 
-// Rota dinâmica: Rota que pode receber conteúdos diferentes. Mas com a vase
-server.get('/noticia/:slug', (req: Request, res: Response) => {
-  let slug: string = req.params.slug;
-  res.send(`Notícia: ${slug}`)
-})
-
-// ex de duas informações dinâmicas: site de acompanhamento de voos:
-// site.com/voo/gru-src
-server.get('/voo/:origem-:destino', (req: Request, res: Response) => {
-  let {origem, destino} = req.params
-
-})
 
 server.listen(80)
